@@ -442,7 +442,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="https://picsum.photos/seed/cleaning237/400/260" alt="Nettoyage" class="service-img" loading="lazy">
+              <img src="services/nettoyage.jpg" alt="Nettoyage" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon"><i class="fa-solid fa-broom"></i></div>
@@ -453,7 +453,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="https://picsum.photos/seed/laundry237/400/260" alt="Lessive" class="service-img" loading="lazy">
+              <img src="services/lessive.jpg" alt="Lessive" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon"><i class="fa-solid fa-shirt"></i></div>
@@ -464,7 +464,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="https://picsum.photos/seed/ironing237/400/260" alt="Repassage" class="service-img" loading="lazy">
+              <img src="services/repassage.jpg" alt="Repassage" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon"><i class="fa-solid fa-wind"></i></div>
@@ -475,7 +475,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="https://picsum.photos/seed/dishes237/400/260" alt="Vaisselle" class="service-img" loading="lazy">
+              <img src="services/vaiselle" alt="Vaisselle" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon"><i class="fa-solid fa-utensils"></i></div>
@@ -486,7 +486,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card service-card--wide">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="https://picsum.photos/seed/cooking237/400/260" alt="Cuisine" class="service-img" loading="lazy">
+              <img src="services/cuisine.jpg" alt="Cuisine" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon"><i class="fa-solid fa-bowl-food"></i></div>
@@ -508,7 +508,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card service-card--member">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="https://picsum.photos/seed/plumbing237/400/260" alt="Plomberie" class="service-img" loading="lazy">
+              <img src="services/plomberie.jpg" alt="Plomberie" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon service-icon--gold"><i class="fa-solid fa-wrench"></i></div>
@@ -519,7 +519,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card service-card--member">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="https://picsum.photos/seed/sewing237/400/260" alt="Couture" class="service-img" loading="lazy">
+              <img src="services/couture.jpg" alt="Couture" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon service-icon--gold"><i class="fa-solid fa-scissors"></i></div>
@@ -530,7 +530,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card service-card--member">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="https://picsum.photos/seed/shoes237/400/260" alt="Cordonnerie" class="service-img" loading="lazy">
+              <img src="services/coordonnerie.jpg" alt="Cordonnerie" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon service-icon--gold"><i class="fa-solid fa-shoe-prints"></i></div>
@@ -552,27 +552,27 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
         <div class="gallery-grid">
           <!-- ADMIN: Replace these images with real photos -->
           <div class="photo-box">
-            <img src="https://picsum.photos/seed/clean_g1/700/480" alt="Service nettoyage" loading="lazy">
+            <img src="travail/nettoyage.jpg" alt="Service nettoyage" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-broom"></i> <span data-i18n="svc_cleaning"><?= e($t['svc_cleaning']) ?></span></div>
           </div>
           <div class="photo-box">
-            <img src="https://picsum.photos/seed/laundry_g2/700/480" alt="Service lessive" loading="lazy">
+            <img src="travail/lessive.jpg" alt="Service lessive" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-shirt"></i> <span data-i18n="svc_laundry"><?= e($t['svc_laundry']) ?></span></div>
           </div>
           <div class="photo-box">
-            <img src="https://picsum.photos/seed/iron_g3/700/480" alt="Service repassage" loading="lazy">
+            <img src="travail/repassage" alt="Service repassage" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-wind"></i> <span data-i18n="svc_ironing"><?= e($t['svc_ironing']) ?></span></div>
           </div>
           <div class="photo-box">
-            <img src="https://picsum.photos/seed/dishes_g4/700/480" alt="Service vaisselle" loading="lazy">
+            <img src="travail/vaiselle" alt="Service vaisselle" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-utensils"></i> <span data-i18n="svc_dishes"><?= e($t['svc_dishes']) ?></span></div>
           </div>
           <div class="photo-box">
-            <img src="https://picsum.photos/seed/cooking_g5/700/480" alt="Service cuisine" loading="lazy">
+            <img src="travail/cuisine" alt="Service cuisine" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-bowl-food"></i> <span data-i18n="svc_cooking"><?= e($t['svc_cooking']) ?></span></div>
           </div>
           <div class="photo-box">
-            <img src="https://picsum.photos/seed/home_g6/700/480" alt="À domicile" loading="lazy">
+            <img src="travail/general.jpg" alt="À domicile" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-house"></i> <span data-i18n="brand"><?= e($t['brand']) ?></span></div>
           </div>
         </div>
