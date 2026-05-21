@@ -21,7 +21,7 @@ html { scroll-behavior: smooth; }
 body {
   font-family: 'Outfit', sans-serif;
   background: var(--bg);
-  color: var(--text);
+  color: var(--green);
   line-height: 1.65;
   padding-bottom: 0;
 }
@@ -34,6 +34,28 @@ ul { list-style: none; }
 .section-dark {
   background: linear-gradient(135deg, var(--dark), var(--mid));
   color: var(--white);
+}
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  background-image: url('servirapide2.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(4, 52, 44, 0.82) 0%,
+    rgba(4, 52, 44, 0.60) 60%,
+    rgba(4, 52, 44, 0.40) 100%
+  );
 }
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────── */
@@ -914,7 +936,9 @@ h1, h2, h3, h4 { font-family: 'Sora', sans-serif; line-height: 1.1; }
 
 @media (max-width: 920px) {
   .desktop-nav { display: none; }
-  .header-actions .btn-outline-nav { display: none; }
+  .header-actions .btn-outline-nav {  display: inline-flex;
+    padding: 7px 12px;
+    font-size: 12px; }
   .hero-inner { grid-template-columns: 1fr; padding: 64px 0 52px; }
   .hero-card { max-width: 400px; }
   .about-grid { grid-template-columns: 1fr; }

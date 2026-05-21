@@ -350,7 +350,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
   <main>
 
     <!-- HERO -->
-    <section id="home" class="hero section-dark">
+    <section id="home" class="hero">
       <div class="hero-bg"></div>
       <div class="container hero-inner">
         <div class="hero-copy">
@@ -476,7 +476,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <article class="service-card">
             <!-- ADMIN: Replace src with real service photo -->
             <div class="service-img-wrap">
-              <img src="services/vaiselle" alt="Vaisselle" class="service-img" loading="lazy">
+              <img src="services/vaiselle.jpg" alt="Vaisselle" class="service-img" loading="lazy">
             </div>
             <div class="service-body">
               <div class="service-icon"><i class="fa-solid fa-utensils"></i></div>
@@ -561,15 +561,15 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
             <div class="photo-label"><i class="fa-solid fa-shirt"></i> <span data-i18n="svc_laundry"><?= e($t['svc_laundry']) ?></span></div>
           </div>
           <div class="photo-box">
-            <img src="travail/repassage" alt="Service repassage" loading="lazy">
+            <img src="travail/repassage.jpg" alt="Service repassage" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-wind"></i> <span data-i18n="svc_ironing"><?= e($t['svc_ironing']) ?></span></div>
           </div>
           <div class="photo-box">
-            <img src="travail/vaiselle" alt="Service vaisselle" loading="lazy">
+            <img src="travail/vaiselle.jpg" alt="Service vaisselle" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-utensils"></i> <span data-i18n="svc_dishes"><?= e($t['svc_dishes']) ?></span></div>
           </div>
           <div class="photo-box">
-            <img src="travail/cuisine" alt="Service cuisine" loading="lazy">
+            <img src="travail/cuisine.jpg" alt="Service cuisine" loading="lazy">
             <div class="photo-label"><i class="fa-solid fa-bowl-food"></i> <span data-i18n="svc_cooking"><?= e($t['svc_cooking']) ?></span></div>
           </div>
           <div class="photo-box">

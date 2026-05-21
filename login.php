@@ -1,11 +1,11 @@
 <?php
 // ============================================================
-//  ServiRapide — login.php
+//  ServiRapide — login.php  (unified login)
 // ============================================================
 require_once 'config.php';
 require_once 'auth.php';
 
-// Déjà connecté → rediriger
+// Already logged in → redirect
 if (!empty($_SESSION['sr_user_id'])) {
     header('Location: ' . (isAdmin() ? 'dashboard_admin.php' : 'dashboard_user.php'));
     exit;
@@ -14,36 +14,36 @@ if (!empty($_SESSION['sr_user_id'])) {
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $phone = trim($_POST['phone'] ?? '');
-    $pass  = $_POST['password'] ?? '';
-    $type  = $_POST['login_type'] ?? 'user'; // 'user' ou 'admin'
+    $identifier = trim($_POST['identifier'] ?? '');
+    $pass       = $_POST['password'] ?? '';
 
-    if ($type === 'admin') {
-        $st = $pdo->prepare('SELECT * FROM admins WHERE username = ?');
-        $st->execute([$phone]); // le champ "phone" contient ici le username admin
-        $admin = $st->fetch();
-        if ($admin && password_verify($pass, $admin['password_hash'])) {
-            $_SESSION['sr_user_id']  = 'admin_' . $admin['id'];
-            $_SESSION['sr_is_admin'] = true;
-            $_SESSION['sr_name']     = $admin['full_name'];
-            header('Location: dashboard_admin.php');
-            exit;
-        }
-        $error = 'Identifiant ou mot de passe administrateur invalide.';
+    // 1️⃣ Check admin table first
+    $st = $pdo->prepare('SELECT * FROM admins WHERE username = ?');
+    $st->execute([$identifier]);
+    $admin = $st->fetch();
 
-    } else {
-        // Connexion client par numéro de téléphone
-        $st = $pdo->prepare('SELECT * FROM users WHERE phone = ?');
-        $st->execute([$phone]);
-        $user = $st->fetch();
-        if ($user && password_verify($pass, $user['password_hash'])) {
-            $_SESSION['sr_user_id'] = $user['id'];
-            $_SESSION['sr_name']    = $user['full_name'];
-            header('Location: dashboard_user.php');
-            exit;
-        }
-        $error = 'Numéro de téléphone ou mot de passe incorrect.';
+    if ($admin && password_verify($pass, $admin['password_hash'])) {
+        $_SESSION['sr_user_id']  = 'admin_' . $admin['id'];
+        $_SESSION['sr_is_admin'] = true;
+        $_SESSION['sr_name']     = $admin['full_name'];
+        header('Location: dashboard_admin.php');
+        exit;
     }
+
+    // 2️⃣ Check users table by phone
+    $st = $pdo->prepare('SELECT * FROM users WHERE phone = ? AND status = "active"');
+    $st->execute([$identifier]);
+    $user = $st->fetch();
+
+    if ($user && password_verify($pass, $user['password_hash'])) {
+        $_SESSION['sr_user_id'] = $user['id'];
+        $_SESSION['sr_name']    = $user['full_name'];
+        header('Location: dashboard_user.php');
+        exit;
+    }
+
+    // 3️⃣ Generic error (don't reveal which field is wrong)
+    $error = 'Identifiant ou mot de passe incorrect.';
 }
 ?>
 <!DOCTYPE html>
@@ -73,13 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .login-logo img { width: 50px; height: 50px; border-radius: 14px; object-fit: cover; }
     .login-logo strong { font-family: 'Sora', sans-serif; font-size: 22px; color: var(--dark); }
     .login-logo small { display: block; color: var(--green); font-size: 12px; }
-    .login-tabs { display: flex; gap: 6px; margin-bottom: 28px; background: var(--bg); border-radius: 14px; padding: 5px; }
-    .login-tab {
-      flex: 1; border: none; background: transparent; border-radius: 11px;
-      padding: 10px; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 13px;
-      color: var(--muted); cursor: pointer; transition: .2s;
-    }
-    .login-tab.active { background: var(--dark); color: #fff; }
     .login-card h2 { font-family: 'Sora', sans-serif; font-size: 24px; color: var(--dark); margin-bottom: 6px; }
     .login-card p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
     .form-field { display: grid; gap: 7px; font-weight: 800; font-size: 13px; color: var(--dark); margin-bottom: 16px; }
@@ -96,14 +89,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       padding: 12px 16px; color: #b91c1c; font-weight: 700; font-size: 13px;
       display: flex; gap: 10px; align-items: center; margin-bottom: 18px;
     }
-    .login-footer { text-align: center; margin-top: 20px; color: var(--muted); font-size: 13px; }
-    .login-footer a { color: var(--green); font-weight: 800; }
     .hint-box {
       background: var(--light); border-radius: 12px; padding: 12px 16px;
       margin-bottom: 20px; font-size: 12px; color: var(--dark);
       border-left: 4px solid var(--green);
     }
     .hint-box strong { color: var(--green); }
+    .login-footer { text-align: center; margin-top: 20px; color: var(--muted); font-size: 13px; }
+    .login-footer a { color: var(--green); font-weight: 800; }
     @media (max-width: 480px) { .login-card { padding: 32px 22px; } }
   </style>
 </head>
@@ -120,25 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </span>
     </div>
 
-    <!-- Onglets Utilisateur / Admin -->
-    <div class="login-tabs">
-      <button class="login-tab active" id="tabUser" onclick="switchTab('user')">
-        <i class="fa-regular fa-user"></i> Espace Client
-      </button>
-      <button class="login-tab" id="tabAdmin" onclick="switchTab('admin')">
-        <i class="fa-solid fa-lock"></i> Administration
-      </button>
-    </div>
-
-    <!-- Titre dynamique -->
-    <div id="titleUser">
-      <h2>Bon retour 👋</h2>
-      <p>Connectez-vous avec votre numéro de téléphone.</p>
-    </div>
-    <div id="titleAdmin" style="display:none">
-      <h2>Panneau Admin 🔐</h2>
-      <p>Accès réservé à l'équipe ServiRapide.</p>
-    </div>
+    <h2>Bon retour 👋</h2>
+    <p>Connectez-vous pour accéder à votre espace.</p>
 
     <?php if ($error): ?>
     <div class="error-msg">
@@ -147,20 +123,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <?php endif; ?>
 
-    <!-- Indice mot de passe initial -->
-    <div class="hint-box" id="hintUser">
+    <div class="hint-box">
       <strong>Premier accès :</strong> votre mot de passe initial vous a été communiqué par WhatsApp lors de l'activation de votre compte.
     </div>
 
     <form method="post">
-      <input type="hidden" name="login_type" id="loginType" value="user">
-
       <div class="form-field">
-        <label id="labelPhone" for="phone">Numéro de téléphone</label>
+        <label for="identifier">Numéro de téléphone / Identifiant</label>
         <div class="field-wrap">
-          <i class="fa-solid fa-phone" id="iconPhone"></i>
-          <input type="text" id="phone" name="phone"
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="identifier" name="identifier"
                  placeholder="Ex: +237 6 72 37 09 50"
+                 value="<?= e($_POST['identifier'] ?? '') ?>"
                  required autocomplete="username">
         </div>
       </div>
@@ -188,43 +162,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   </div>
 </div>
-
-<script>
-function switchTab(type) {
-  const isAdmin = type === 'admin';
-  document.getElementById('loginType').value = type;
-
-  document.getElementById('tabUser').classList.toggle('active', !isAdmin);
-  document.getElementById('tabAdmin').classList.toggle('active', isAdmin);
-
-  document.getElementById('titleUser').style.display  = isAdmin ? 'none' : '';
-  document.getElementById('titleAdmin').style.display = isAdmin ? '' : 'none';
-  document.getElementById('hintUser').style.display   = isAdmin ? 'none' : '';
-
-  const labelPhone = document.getElementById('labelPhone');
-  const iconPhone  = document.getElementById('iconPhone');
-  const phoneInput = document.getElementById('phone');
-
-  if (isAdmin) {
-    labelPhone.textContent = "Nom d'utilisateur";
-    iconPhone.className    = 'fa-solid fa-user-shield';
-    phoneInput.placeholder = 'admin';
-    phoneInput.type        = 'text';
-  } else {
-    labelPhone.textContent = 'Numéro de téléphone';
-    iconPhone.className    = 'fa-solid fa-phone';
-    phoneInput.placeholder = 'Ex: +237 6 72 37 09 50';
-    phoneInput.type        = 'tel';
-  }
-
-  phoneInput.value = '';
-  document.getElementById('password').value = '';
-}
-
-<?php if ($_POST['login_type'] ?? '' === 'admin'): ?>
-switchTab('admin');
-<?php endif; ?>
-</script>
 
 </body>
 </html>
