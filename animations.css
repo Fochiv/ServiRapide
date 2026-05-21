@@ -1,0 +1,302 @@
+/* ============================================================
+   ServiRapide — animations.css
+   Colle ce fichier dans C:\xampp\htdocs\servi\
+   Puis ajoute dans index.php, login.php, dashboard_user.php,
+   dashboard_admin.php AVANT </head> :
+   <link rel="stylesheet" href="animations.css">
+   ============================================================ */
+
+/* ── VARIABLES SUPPLÉMENTAIRES ─────────────────────────────── */
+:root {
+  --anim-speed: .3s;
+  --anim-bounce: cubic-bezier(.34,1.56,.64,1);
+  --anim-smooth: cubic-bezier(.4,0,.2,1);
+  --glow-green: 0 0 20px rgba(29,158,117,.35);
+  --glow-gold:  0 0 20px rgba(245,166,35,.35);
+}
+
+/* ── BOUTONS — effet press + brillance ──────────────────────── */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--anim-speed) var(--anim-bounce),
+    box-shadow var(--anim-speed) var(--anim-smooth),
+    background var(--anim-speed) var(--anim-smooth) !important;
+}
+
+/* Effet vague au clic (ripple) */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.18);
+  border-radius: inherit;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform .5s var(--anim-smooth), opacity .5s;
+}
+.btn:active::after {
+  transform: scale(2.5);
+  opacity: 0;
+  transition: 0s;
+}
+
+.btn:hover  { transform: translateY(-3px) scale(1.02); }
+.btn:active { transform: translateY(0)    scale(.97);  }
+
+.btn-primary:hover { box-shadow: var(--glow-green); }
+.btn-whatsapp:hover { box-shadow: 0 0 20px rgba(37,211,102,.4); }
+
+/* ── CARTES — hover flottant ────────────────────────────────── */
+.service-card,
+.about-card,
+.price-card,
+.step-card,
+.dashboard-card,
+.contact-card,
+.sub-fee-card {
+  transition:
+    transform .35s var(--anim-bounce),
+    box-shadow .35s var(--anim-smooth),
+    border-color .25s var(--anim-smooth) !important;
+  will-change: transform;
+}
+
+.service-card:hover  { transform: translateY(-10px) scale(1.01); box-shadow: 0 32px 64px rgba(4,52,44,.18); }
+.about-card:hover    { transform: translateY(-8px);  box-shadow: 0 24px 52px rgba(4,52,44,.15); }
+.price-card:hover    { transform: translateY(-8px) scale(1.02); }
+.price-card.featured:hover { box-shadow: var(--glow-green); }
+.price-card--premium:hover { box-shadow: var(--glow-gold); }
+
+/* ── NAVIGATION — soulignement animé ───────────────────────── */
+.desktop-nav a {
+  position: relative;
+}
+.desktop-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--green);
+  border-radius: 999px;
+  transition: width .3s var(--anim-smooth), left .3s var(--anim-smooth);
+}
+.desktop-nav a:hover::after,
+.desktop-nav a.active::after {
+  width: 70%;
+  left: 15%;
+}
+
+/* ── LOGO — rotation engrenage au hover ─────────────────────── */
+.brand-logo {
+  transition: transform .6s var(--anim-bounce);
+}
+.brand:hover .brand-logo {
+  transform: rotate(20deg) scale(1.1);
+}
+
+/* ── HERO — animation d'entrée ──────────────────────────────── */
+.hero-copy {
+  animation: slideInLeft .8s var(--anim-bounce) both;
+}
+.hero-card {
+  animation: slideInRight .8s var(--anim-bounce) .15s both;
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── STATS BAR — animation compteur ────────────────────────── */
+.stats-grid > div {
+  animation: popIn .6s var(--anim-bounce) both;
+}
+.stats-grid > div:nth-child(1) { animation-delay: .1s; }
+.stats-grid > div:nth-child(2) { animation-delay: .2s; }
+.stats-grid > div:nth-child(3) { animation-delay: .3s; }
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.8) translateY(20px); }
+  to   { opacity: 1; transform: scale(1)  translateY(0); }
+}
+
+/* ── ICÔNES SERVICES — rotation au hover ───────────────────── */
+.service-icon {
+  transition: transform .4s var(--anim-bounce), background .3s;
+}
+.service-card:hover .service-icon {
+  transform: rotate(15deg) scale(1.15);
+  background: var(--green);
+  color: #fff;
+}
+.service-card:hover .service-icon.service-icon--gold {
+  background: var(--gold);
+  color: #fff;
+}
+
+/* ── PROGRESS BARS — animation au chargement ───────────────── */
+.progress span {
+  animation: growBar 1.2s var(--anim-smooth) .4s both;
+}
+@keyframes growBar {
+  from { width: 0 !important; }
+}
+
+/* ── STEP CARDS — numéros animés ───────────────────────────── */
+.step-card {
+  transition: transform .3s var(--anim-bounce);
+}
+.step-card:hover {
+  transform: translateY(-6px);
+}
+.step-icon {
+  transition: transform .4s var(--anim-bounce), background .3s, color .3s;
+}
+.step-card:hover .step-icon {
+  transform: scale(1.2) rotate(-10deg);
+  background: var(--green);
+  color: #fff;
+}
+
+/* ── PHOTO GALLERY — zoom + overlay ────────────────────────── */
+.photo-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(29,158,117,.0), rgba(4,52,44,.4));
+  opacity: 0;
+  transition: opacity .4s var(--anim-smooth);
+  z-index: 1;
+  border-radius: inherit;
+}
+.photo-box:hover::before { opacity: 1; }
+.photo-label {
+  transition: transform .4s var(--anim-smooth);
+  z-index: 2;
+}
+.photo-box:hover .photo-label {
+  transform: translateY(-4px);
+}
+
+/* ── FORMULAIRE — focus animé ───────────────────────────────── */
+.subscribe-form input:focus,
+.subscribe-form select:focus {
+  transform: scale(1.01);
+  box-shadow: 0 0 0 4px rgba(29,158,117,.12);
+}
+.subscribe-form label {
+  transition: color .2s;
+}
+.subscribe-form label:focus-within {
+  color: var(--green);
+}
+
+/* ── BADGE HERO — pulsation ─────────────────────────────────── */
+.badge {
+  animation: pulseBadge 3s ease-in-out infinite;
+}
+@keyframes pulseBadge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,.1); }
+  50%       { box-shadow: 0 0 0 8px rgba(255,255,255,.0); }
+}
+
+/* ── STATUS DOT — pulsation verte ───────────────────────────── */
+.status-dot {
+  animation: pulseGreen 2s ease-in-out infinite;
+}
+@keyframes pulseGreen {
+  0%, 100% { box-shadow: 0 0 0 6px rgba(29,158,117,.2); }
+  50%       { box-shadow: 0 0 0 10px rgba(29,158,117,.0); }
+}
+
+/* ── MOBILE TABBAR — active bounce ──────────────────────────── */
+.mobile-tabbar a {
+  transition: transform .3s var(--anim-bounce), color .2s;
+}
+.mobile-tabbar a.active {
+  transform: translateY(-4px) scale(1.1);
+}
+.mobile-tabbar a i {
+  transition: transform .3s var(--anim-bounce);
+}
+.mobile-tabbar a:active i {
+  transform: scale(.8);
+}
+
+/* ── FOOTER SOCIAL — rotation au hover ─────────────────────── */
+.footer-social a {
+  transition: background .2s, color .2s, transform .3s var(--anim-bounce) !important;
+}
+.footer-social a:hover {
+  transform: translateY(-4px) rotate(8deg) !important;
+}
+
+/* ── PLAN TAGS — hover glow ─────────────────────────────────── */
+.plan-tag {
+  transition: transform .3s var(--anim-bounce), background .2s, color .2s;
+}
+.price-card:hover .plan-tag {
+  transform: scale(1.2) rotate(-5deg);
+  background: var(--green);
+  color: #fff;
+}
+.price-card--premium:hover .plan-tag {
+  background: var(--gold);
+  color: #fff;
+}
+
+/* ── NOTIFICATION BELL ──────────────────────────────────────── */
+.sb-badge {
+  animation: shake 2.5s ease-in-out infinite;
+}
+@keyframes shake {
+  0%,90%,100% { transform: rotate(0); }
+  92%  { transform: rotate(-12deg); }
+  94%  { transform: rotate(12deg); }
+  96%  { transform: rotate(-8deg); }
+  98%  { transform: rotate(8deg); }
+}
+
+/* ── SCROLL FADE — amélioration ─────────────────────────────── */
+.fade-init {
+  opacity: 0;
+  transform: translateY(32px) scale(.97);
+  transition: opacity .65s var(--anim-smooth), transform .65s var(--anim-bounce) !important;
+}
+.fade-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ── HERO LOGO — flottement ─────────────────────────────────── */
+.hero-logo-wrap {
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* ── DASHBOARD KPI CARDS ────────────────────────────────────── */
+.kpi-card, .stat-card {
+  transition: transform .3s var(--anim-bounce), box-shadow .3s var(--anim-smooth) !important;
+}
+.kpi-card:hover, .stat-card:hover {
+  transform: translateY(-6px) scale(1.02) !important;
+  box-shadow: 0 16px 40px rgba(4,52,44,.12) !important;
+}
+
+/* ── LOGIN CARD ─────────────────────────────────────────────── */
+.login-card {
+  animation: slideUp .7s var(--anim-bounce) both;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px) scale(.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}

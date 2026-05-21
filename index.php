@@ -314,6 +314,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
     window.SR_LANG = '<?= $lang ?>';
     window.SR_TRANSLATIONS = <?= json_encode($text, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) ?>;
   </script>
+  <link rel="stylesheet" href="animations.css">
 </head>
 <body>
 
@@ -335,7 +336,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
         <a href="#contact"     data-i18n="nav_contact"><?= e($t['nav_contact']) ?></a>
       </nav>
       <div class="header-actions">
-        <a href="#register" class="btn btn-outline-nav" data-i18n="nav_login">
+        <a href="login.php" class="btn btn-outline-nav" data-i18n="nav_login">
           <i class="fa-regular fa-user"></i> <?= e($t['nav_login']) ?>
         </a>
         <a href="#register" class="btn btn-primary btn-sm" data-i18n="nav_register">
@@ -792,7 +793,7 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
           <p data-i18n="register_subtitle"><?= e($t['register_subtitle']) ?></p>
           <p class="form-note"><i class="fa-solid fa-circle-info"></i> <span data-i18n="form_note"><?= e($t['form_note']) ?></span></p>
         </div>
-        <form class="subscribe-form" method="post" action="#register">
+        <form class="subscribe-form" method="post" action="register_handler.php">
           <?php if ($submitted): ?>
             <div class="success-message">
               <i class="fa-solid fa-circle-check"></i>
@@ -943,5 +944,6 @@ function e($v) { return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8'); }
   </footer>
 
   <script src="script.js"></script>
+  <script src="animations.js"></script>
 </body>
 </html>
